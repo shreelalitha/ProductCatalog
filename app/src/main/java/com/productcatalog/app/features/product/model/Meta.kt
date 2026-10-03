@@ -1,4 +1,4 @@
-package com.productcatalog.app.model
+package com.productcatalog.app.features.product.model
 
 data class Meta(
     val barcode: String,

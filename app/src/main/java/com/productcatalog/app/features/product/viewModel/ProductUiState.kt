@@ -1,6 +1,6 @@
-package com.productcatalog.app.viewModel
+package com.productcatalog.app.features.product.viewModel
 
-import com.productcatalog.app.model.Product
+import com.productcatalog.app.features.product.model.Product
 
 interface ProductUiState {
     data object Loading : ProductUiState

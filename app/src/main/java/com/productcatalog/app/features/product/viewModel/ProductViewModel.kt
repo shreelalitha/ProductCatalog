@@ -1,8 +1,8 @@
-package com.productcatalog.app.viewModel
+package com.productcatalog.app.features.product.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.productcatalog.app.repo.ProductRepo
+import com.productcatalog.app.features.product.repo.ProductRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

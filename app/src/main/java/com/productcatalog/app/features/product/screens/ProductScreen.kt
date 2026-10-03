@@ -1,4 +1,4 @@
-package com.productcatalog.app.ui.screens
+package com.productcatalog.app.features.product.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -7,8 +7,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.productcatalog.app.viewModel.ProductUiState
-import com.productcatalog.app.viewModel.ProductViewModel
+import com.productcatalog.app.features.product.viewModel.ProductUiState
+import com.productcatalog.app.features.product.viewModel.ProductViewModel
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel = hiltViewModel()){
