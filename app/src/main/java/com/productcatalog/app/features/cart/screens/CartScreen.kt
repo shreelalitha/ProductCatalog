@@ -1,11 +1,15 @@
 package com.productcatalog.app.features.cart.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -54,48 +58,72 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel(),
         }
     ) { paddingValues ->
 
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
 
-            item {
-                Text(
-                    text = "Cart",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp),
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
 
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentPadding = PaddingValues(
+                    horizontal = 10.dp,
+                    vertical = 8.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
 
-                    Text(
-                        text = "$totalItems items"
-                    )
+                items(
+                    items = cartItems,
+                    key = { it.productId }
+                ) { item ->
 
-                    Text(
-                        text = "Total cost: ₹$totalCost"
+                    CartItemRow(
+                        item = item,
+                        onIncrease = { viewModel.increaseQuantity(item.productId) },
+                        onDecrease = { viewModel.decreaseQuantity(item.productId) },
+                        onDelete = { viewModel.deleteItemFromCart(item.productId) }
                     )
                 }
             }
 
-            items(
-                items = cartItems,
-                key = { it.productId }
-            ) { item ->
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp),
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
 
-                CartItemRow(
-                    item = item,
-                    onIncrease = {viewModel.increaseQuantity(item.productId)},
-                    onDecrease = {viewModel.decreaseQuantity(item.productId)},
-                    onDelete = {viewModel.deleteItemFromCart(item.productId)}
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 12.dp
+                    ),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Total Items: $totalItems",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Text(
+                    text = "Total Cost: ₹${String.format("%.2f",totalCost)}",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp),
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
         }
     }
 }

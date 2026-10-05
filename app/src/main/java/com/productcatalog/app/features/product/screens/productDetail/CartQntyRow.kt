@@ -71,7 +71,7 @@ fun CartQntyRow(
         Spacer(modifier = Modifier.weight(1f))
 
         Text(
-            text = "₹$totalPrice",
+            text = "₹${String.format("%.2f", totalPrice)}",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary
         )

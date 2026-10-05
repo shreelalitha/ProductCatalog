@@ -49,7 +49,7 @@ fun HomeTopBar(showBackButton: Boolean = false, onBackClick: () -> Unit = {}) {
             Column(modifier = Modifier
                 .fillMaxWidth()) {
                 Text(
-                    text = "Hello there!",
+                    text = if (!showBackButton) "Hello there!" else "Cart",
                     style = MaterialTheme.typography.titleMedium
                 )
 
