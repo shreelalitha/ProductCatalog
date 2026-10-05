@@ -1,4 +1,4 @@
-package com.productcatalog.app.features.product.screens
+package com.productcatalog.app.features.product.screens.productsDisplay
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -15,6 +15,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.productcatalog.app.features.product.screens.HomeBottomBar
+import com.productcatalog.app.features.product.screens.HomeTopBar
 import com.productcatalog.app.features.product.viewModel.ProductUiState
 import com.productcatalog.app.features.product.viewModel.ProductViewModel
 
@@ -36,7 +38,8 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel(),
             HomeBottomBar(
                 selectedItem = "home",
                 onHomeClick = {},
-                onCartClick = onCartClick)
+                onCartClick = onCartClick
+            )
         }
     ) { paddingValues ->
 

@@ -1,4 +1,4 @@
-package com.productcatalog.app.features.product.screens
+package com.productcatalog.app.features.product.screens.productsDisplay
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
