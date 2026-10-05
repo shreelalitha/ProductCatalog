@@ -10,9 +10,9 @@ import javax.inject.Inject
 class ProductRepo @Inject constructor(
     private val productApi: ProductApi
 ) {
-    suspend fun getProducts(): ProductResponse {
+    suspend fun getProducts(limit: Int, skip: Int): ProductResponse {
         return try {
-            productApi.getProducts()
+            productApi.getProducts(limit, skip)
         } catch (e: SocketTimeoutException) {
             throw Exception("Oops! The request took too long")
         } catch (e: IOException) {

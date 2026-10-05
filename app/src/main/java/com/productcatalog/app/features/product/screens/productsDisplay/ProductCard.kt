@@ -34,50 +34,47 @@ fun ProductCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp)
             .clickable(onClick = onProductClick)
     ) {
 
         Column(modifier = Modifier.padding(12.dp)) {
 
-            AsyncImage(model = product.thumbnail,
+            AsyncImage(
+                model = product.thumbnail,
                 contentDescription = product.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp),
-                contentScale = ContentScale.Crop
+                    .height(140.dp),
+                contentScale = ContentScale.Fit
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Text(
+                text = product.title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
 
-                Text(
-                    text = product.title,
-                    modifier = Modifier.weight(1f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Spacer(modifier = Modifier.size(8.dp))
-
-                IconButton(onClick = onAddClick) {
-                    Icon(
-                        painter = painterResource(R.drawable.add),
-                        contentDescription = "Add to cart"
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = "₹${product.price}", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "${product.rating}", style = MaterialTheme.typography.bodyMedium)
-            }
+//                IconButton(onClick = onAddClick) {
+//                    Icon(
+//                        painter = painterResource(R.drawable.add),
+//                        contentDescription = "Add to cart"
+//                    )
+//                }
         }
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "₹ ${product.price}", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "★ ${product.rating}", style = MaterialTheme.typography.bodyMedium)
+        }
+
+        Spacer(modifier = Modifier.size(6.dp))
     }
 }

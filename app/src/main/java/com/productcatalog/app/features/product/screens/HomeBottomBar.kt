@@ -1,6 +1,7 @@
 package com.productcatalog.app.features.product.screens
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -12,7 +13,7 @@ import com.productcatalog.app.R
 fun HomeBottomBar(selectedItem: String,
                   onHomeClick: () -> Unit, onCartClick: () -> Unit) {
 
-    NavigationBar {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
         NavigationBarItem(
             selected = selectedItem == "home",
 

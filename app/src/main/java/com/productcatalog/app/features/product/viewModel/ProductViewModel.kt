@@ -17,12 +17,20 @@ class ProductViewModel @Inject constructor(
     private val _prodStateFlow = MutableStateFlow<ProductUiState>(ProductUiState.Loading)
     val prodStateFlow: StateFlow<ProductUiState> = _prodStateFlow
     private var currentQuery = ""
+    private val pageSize = 20
+    private var currentSkip = 0
+    private var isLoadingMore = false
+    private var hasMoreProds = true
 
     fun getAllProducts(){
+        currentQuery = ""
+        currentSkip = 0
+        hasMoreProds = true
         _prodStateFlow.value = ProductUiState.Loading
         viewModelScope.launch {
             try{
-                val response = repo.getProducts().products
+                val response = repo.getProducts(limit = pageSize, skip = currentSkip).products
+                currentSkip += response.size
                 _prodStateFlow.value = ProductUiState.Success(response)
             }catch (e: Exception){
                 _prodStateFlow.value = ProductUiState.Error(e.message ?: "Uh oh! Unable to load products")
