@@ -9,10 +9,12 @@ import androidx.compose.ui.res.painterResource
 import com.productcatalog.app.R
 
 @Composable
-fun HomeBottomBar(onHomeClick: () -> Unit, onCartClick: () -> Unit) {
+fun HomeBottomBar(selectedItem: String,
+                  onHomeClick: () -> Unit, onCartClick: () -> Unit) {
+
     NavigationBar {
         NavigationBarItem(
-            selected = true,
+            selected = selectedItem == "home",
 
             onClick = onHomeClick,
             icon = {
@@ -25,7 +27,7 @@ fun HomeBottomBar(onHomeClick: () -> Unit, onCartClick: () -> Unit) {
         )
 
         NavigationBarItem(
-            selected = false,
+            selected = selectedItem == "cart",
             onClick = onCartClick,
             icon = {
                 Icon(

@@ -32,7 +32,12 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel(),
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing,
         topBar = { HomeTopBar() },
-        bottomBar = { HomeBottomBar(onHomeClick = {}, onCartClick = onCartClick) }
+        bottomBar = {
+            HomeBottomBar(
+                selectedItem = "home",
+                onHomeClick = {},
+                onCartClick = onCartClick)
+        }
     ) { paddingValues ->
 
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
