@@ -106,8 +106,8 @@ fun ProductDetailScreen(
                     ) {
 
                         AsyncImage(
-                            model = product.thumbnail,
-                            contentDescription = product.title,
+                            model = product.thumbnail?:"",
+                            contentDescription = product.title?:"",
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
@@ -120,13 +120,13 @@ fun ProductDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = product.title,
+                                text = product.title?:"",
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.weight(1f)
                             )
 
                             Text(
-                                text = product.category,
+                                text = product.category?:"",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -139,12 +139,12 @@ fun ProductDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = product.brand,
+                                text = product.brand?:"",
                                 style = MaterialTheme.typography.bodyMedium
                             )
 
                             Text(
-                                text = "Stock: ${product.stock}",
+                                text = "Stock: ${product.stock?:""}",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -156,12 +156,12 @@ fun ProductDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "${product.price}",
+                                text = "${product.price?:""}",
                                 style = MaterialTheme.typography.titleMedium
                             )
 
                             Text(
-                                text = "${product.rating}",
+                                text = "${product.rating?:""}",
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -176,7 +176,7 @@ fun ProductDetailScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = product.description,
+                            text = product.description?:"",
                             style = MaterialTheme.typography.bodyMedium
                         )
 

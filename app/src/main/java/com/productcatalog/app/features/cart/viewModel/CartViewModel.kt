@@ -36,9 +36,9 @@ class CartViewModel @Inject constructor(private val repo: CartRepo): ViewModel()
             if (existingItem == null) {
                 val cartItem = CartEntity(
                     productId = product.id,
-                    title = product.title,
+                    title = product.title?:"",
                     price = product.price,
-                    thumbnail = product.thumbnail,
+                    thumbnail = product.thumbnail?:"",
                     quantity = 1
                 )
                 repo.insertCartItem(cartItem)

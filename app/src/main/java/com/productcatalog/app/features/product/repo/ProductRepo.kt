@@ -15,4 +15,8 @@ class ProductRepo @Inject constructor(
     suspend fun getProduct(id: Int): Product {
         return productApi.getProduct(id)
     }
+
+    suspend fun searchProducts(query: String): ProductResponse {
+        return productApi.searchProducts(query)
+    }
 }

@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                                 navController.popBackStack()
                             },
                             onHomeClick = {
-                                navController.navigate("home")
+                                navController.popBackStack("home", false)
                             }
                         )
                     }

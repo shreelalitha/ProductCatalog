@@ -12,6 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,9 +29,14 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel(),
     onCartClick: () -> Unit
 ) {
     val state by viewModel.prodStateFlow.collectAsStateWithLifecycle()
+    var query by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.getAllProducts()
+        if (query.isBlank()) {
+            viewModel.getAllProducts()
+        } else {
+            viewModel.searchProducts(query)
+        }
     }
 
     Scaffold(
@@ -45,7 +53,21 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel(),
 
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
 
-            SearchBar()
+            SearchBar(
+                query = query,
+                onQueryChange = { query = it },
+                onSearch = {
+                    if (query.isBlank()) {
+                        viewModel.getAllProducts()
+                    } else {
+                        viewModel.searchProducts(query)
+                    }
+                },
+                onClear = {
+                    query = ""
+                    viewModel.getAllProducts()
+                }
+            )
 
             when (val currentState = state) {
                 ProductUiState.Loading -> {

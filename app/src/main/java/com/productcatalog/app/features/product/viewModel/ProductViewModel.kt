@@ -16,8 +16,13 @@ class ProductViewModel @Inject constructor(
 
     private val _prodStateFlow = MutableStateFlow<ProductUiState>(ProductUiState.Loading)
     val prodStateFlow: StateFlow<ProductUiState> = _prodStateFlow
+    private var currentQuery = ""
 
     fun getAllProducts(){
+        if (_prodStateFlow.value is ProductUiState.Success) {
+            return
+        }
+
         _prodStateFlow.value = ProductUiState.Loading
         viewModelScope.launch {
             try{
@@ -25,6 +30,22 @@ class ProductViewModel @Inject constructor(
                 _prodStateFlow.value = ProductUiState.Success(response)
             }catch (e: Exception){
                 _prodStateFlow.value = ProductUiState.Error(e.message.toString())
+            }
+        }
+    }
+
+    fun searchProducts(query: String) {
+        currentQuery = query
+        viewModelScope.launch {
+            try {
+                val response = repo.searchProducts(query)
+                _prodStateFlow.value =
+                    ProductUiState.Success(response.products)
+            } catch (e: Exception) {
+                _prodStateFlow.value =
+                    ProductUiState.Error(
+                        e.message.toString()
+                    )
             }
         }
     }
