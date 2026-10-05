@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.productcatalog.app.R
+import com.productcatalog.app.features.cart.viewModel.CartViewModel
 import com.productcatalog.app.features.product.viewModel.ProductDetailUiState
 import com.productcatalog.app.features.product.viewModel.ProductDetailViewModel
 
@@ -40,12 +41,17 @@ import com.productcatalog.app.features.product.viewModel.ProductDetailViewModel
 fun ProductDetailScreen(
     productId: Int,
     onBackClick: () -> Unit,
-    viewModel: ProductDetailViewModel = hiltViewModel()
+    viewModel: ProductDetailViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel()
 ) {
     val productState by viewModel.productState.collectAsStateWithLifecycle()
+    val cartItems by cartViewModel.cartItems.collectAsStateWithLifecycle()
 
     LaunchedEffect(productId) {
         viewModel.getProduct(productId)
+    }
+    LaunchedEffect(Unit) {
+        cartViewModel.getCartItems()
     }
 
     Scaffold(
@@ -82,6 +88,9 @@ fun ProductDetailScreen(
             is ProductDetailUiState.Success -> {
 
                 val product = state.product
+                val cartItem = cartItems.find {
+                    it.productId == product.id
+                }
 
                 Column(
                     modifier = Modifier
@@ -90,7 +99,6 @@ fun ProductDetailScreen(
                         .verticalScroll(rememberScrollState())
                 ) {
 
-                    // Product image + quick add button
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -103,20 +111,6 @@ fun ProductDetailScreen(
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
-
-                        IconButton(
-                            onClick = {
-                                // Add to cart
-                            },
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(16.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.cart),
-                                contentDescription = "Add to cart"
-                            )
-                        }
                     }
 
                     Column(
@@ -188,12 +182,52 @@ fun ProductDetailScreen(
 
                         Spacer(modifier = Modifier.height(24.dp))
 
-                        Button(
-                            onClick = {
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Add to Cart")
+                        if (cartItem == null) {
+                            Button(
+                                onClick = {
+                                       cartViewModel.addToCart(product)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("Add to Cart")
+                            }
+
+                        } else {
+                            if(cartItem.quantity>0) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+
+                                    IconButton(
+                                        onClick = {
+                                            cartViewModel.decreaseQuantity(product.id)
+                                        }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.remove),
+                                            contentDescription = "Decrease"
+                                        )
+                                    }
+
+                                    Text(
+                                        text = cartItem.quantity.toString(),
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+
+                                    IconButton(
+                                        onClick = {
+                                            cartViewModel.addToCart(product)
+                                        }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.add_plain),
+                                            contentDescription = "Increase"
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }

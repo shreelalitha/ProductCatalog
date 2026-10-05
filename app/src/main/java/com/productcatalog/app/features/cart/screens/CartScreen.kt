@@ -91,9 +91,9 @@ fun CartScreen(viewModel: CartViewModel = hiltViewModel(),
 
                 CartItemRow(
                     item = item,
-                    onIncrease = {},
-                    onDecrease = {},
-                    onDelete = {}
+                    onIncrease = {viewModel.increaseQuantity(item.productId)},
+                    onDecrease = {viewModel.decreaseQuantity(item.productId)},
+                    onDelete = {viewModel.deleteItemFromCart(item.productId)}
                 )
             }
         }

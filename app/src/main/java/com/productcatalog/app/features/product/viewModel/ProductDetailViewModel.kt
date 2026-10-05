@@ -2,6 +2,9 @@ package com.productcatalog.app.features.product.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.productcatalog.app.data.room.CartEntity
+import com.productcatalog.app.features.cart.repo.CartRepo
+import com.productcatalog.app.features.product.model.Product
 import com.productcatalog.app.features.product.repo.ProductRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -11,6 +11,10 @@ class CartRepo @Inject constructor(private val cartDao: CartDao) {
         return cartDao.getAllCartItems()
     }
 
+    suspend fun getSpecificCartItem(productId: Int): CartEntity? {
+        return cartDao.getSpecificCartItem(productId)
+    }
+
     suspend fun insertCartItem(item: CartEntity) {
         cartDao.insertCartItem(item)
     }

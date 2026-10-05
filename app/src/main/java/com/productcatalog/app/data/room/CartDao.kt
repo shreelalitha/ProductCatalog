@@ -12,6 +12,9 @@ interface CartDao {
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): Flow<List<CartEntity>>
 
+    @Query("SELECT * FROM cart_items WHERE productId = :productId")
+    suspend fun getSpecificCartItem(productId: Int): CartEntity?
+
     @Insert
     suspend fun insertCartItem(item: CartEntity)
 

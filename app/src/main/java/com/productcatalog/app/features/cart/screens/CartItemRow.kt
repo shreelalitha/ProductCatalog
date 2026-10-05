@@ -19,11 +19,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.productcatalog.app.R
+import com.productcatalog.app.data.room.CartEntity
 import com.productcatalog.app.features.cart.model.CartItem
 
 @Composable
 fun CartItemRow(
-    item: CartItem,
+    item: CartEntity,
     onIncrease: () -> Unit,
     onDecrease: () -> Unit,
     onDelete: () -> Unit
