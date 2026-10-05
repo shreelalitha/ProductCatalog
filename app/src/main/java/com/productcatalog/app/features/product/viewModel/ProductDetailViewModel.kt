@@ -29,7 +29,7 @@ class ProductDetailViewModel @Inject constructor(
                 _productState.value = ProductDetailUiState.Success(product)
             } catch (e: Exception) {
                 _productState.value = ProductDetailUiState.Error(
-                        e.message.toString()
+                    e.message ?: "Uh oh! Unable to load product"
                 )
             }
         }

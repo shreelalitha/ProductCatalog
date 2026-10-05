@@ -19,17 +19,13 @@ class ProductViewModel @Inject constructor(
     private var currentQuery = ""
 
     fun getAllProducts(){
-        if (_prodStateFlow.value is ProductUiState.Success) {
-            return
-        }
-
         _prodStateFlow.value = ProductUiState.Loading
         viewModelScope.launch {
             try{
                 val response = repo.getProducts().products
                 _prodStateFlow.value = ProductUiState.Success(response)
             }catch (e: Exception){
-                _prodStateFlow.value = ProductUiState.Error(e.message.toString())
+                _prodStateFlow.value = ProductUiState.Error(e.message ?: "Uh oh! Unable to load products")
             }
         }
     }
@@ -44,7 +40,7 @@ class ProductViewModel @Inject constructor(
             } catch (e: Exception) {
                 _prodStateFlow.value =
                     ProductUiState.Error(
-                        e.message.toString()
+                        e.message ?: "Uh oh! Unable to load products"
                     )
             }
         }
